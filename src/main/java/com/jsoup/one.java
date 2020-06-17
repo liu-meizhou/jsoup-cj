@@ -22,6 +22,10 @@ import java.util.Scanner;
  * Example program to list links from a URL.
  */
 public class one {
+    //运行需要修改此文件
+    private static String jsoupFile = "F://jsoup//";
+    private static String userName = "";
+    private static String password = "";
     public static void main(String[] args) throws IOException {
         Connection connect = Jsoup.connect("https://cas.gzhu.edu.cn/cas_server/login");
         Connection.Request request = connect.request();
@@ -48,9 +52,9 @@ public class one {
         connect.url("https://cas.gzhu.edu.cn/cas_server/captcha.jsp");
         Connection.Response execute = connect.ignoreContentType(true).execute();
         byte[] img = execute.bodyAsBytes();
-        ImgUtils.savaImage(img, "F://jsoup//", "code.png");
+        ImgUtils.savaImage(img, jsoupFile, "code.png");
 //        print("\nContext: (%s)",execute.headers().toString());
-        String code = ImgUtils.getCode("F://jsoup//code.png");
+        String code = ImgUtils.getCode(jsoupFile,"code.png");
 
         System.out.println(code);
         Scanner sc = new Scanner(System.in);
@@ -59,7 +63,7 @@ public class one {
 
         // 登录
         connect.url("https://cas.gzhu.edu.cn/cas_server/login");
-        connect.data("username", "").data("password", "")
+        connect.data("username", userName).data("password", password)
                 .data("captcha", code).data("warn", "true")
                 .data("submit","登录");
         for (Map.Entry<String, String> entry : sub.entrySet()) {
@@ -93,7 +97,7 @@ public class one {
         //获取成绩
         request.header("Referer","http://jwxt.gzhu.edu.cn/jwglxt/xtgl/index_initMenu.html");
         connect.url("http://jwxt.gzhu.edu.cn/jwglxt/cjcx/cjcx_cxDgXscj.html?doType=query");
-        connect.data("xnm", "2019").data("xqm", "3")
+        connect.data("xnm", "2018").data("xqm", "3")
                 .data("_search", "false").data("time", "1").data("queryModel.showCount", "20")
                 .data("queryModel.currentPage", "1").data("queryModel.sortName", "").data("queryModel.soryOrder", "asc");
         res = connect.ignoreContentType(true).method(Connection.Method.POST).execute();// 执行请求

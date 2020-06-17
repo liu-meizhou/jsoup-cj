@@ -173,15 +173,15 @@ public class ImgUtils {
 
     }
 
-    public static String getCode(String OriginalImg){
+    public static String getCode(String outFile,String fileName){
         //识别样本输出地址
-        String ocrResult = "F:\\jsoup\\codeout.jpg";
+        String ocrResult = outFile+"codeout.jpg";
         //去噪点
-        removeBackground(OriginalImg, ocrResult);
+        removeBackground(outFile+fileName, ocrResult);
         //裁剪边角
         // ImgUtils.cuttingImg(ocrResult);
         //OCR识别
-        String lagnguagePath = "F:\\jsoup\\tessdata";
+        String lagnguagePath = outFile+"tessdata";
         ITesseract instance = new Tesseract();
         File imgDir = new File(ocrResult);
         //设置训练库的位置
